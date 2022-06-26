@@ -17,7 +17,7 @@ const Layout = ({ title, index, children }: Props) => {
         <meta property="og:title" content={title} key="title" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {index && <Header />}
+      {index ? <Header /> : <Nav />}
       <div className="container-md">{children}</div>
       <footer className="text-center text-gray-600 bg-blue-200 dark:bg-blue-800 dark:text-gray-200 p-4">
         <span>Made with love by Less is More</span>
