@@ -1,6 +1,21 @@
 /** @type {import('next').NextConfig} */
+
+const path = require("path");
+
 const nextConfig = {
   reactStrictMode: true,
-}
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/about',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,8 +1,15 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import "bootstrap/dist/css/bootstrap.css";
+import "../styles/globals.scss";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import type { AppProps } from "next/app";
+import { ThemeProvider } from "next-themes";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <ThemeProvider attribute="class" enableSystem={false}>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
+};
 
-export default MyApp
+export default App;
