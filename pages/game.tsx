@@ -25,8 +25,8 @@ const getRandomCountry = (countries: Country[]): Country => {
 
 const Capital: NextPage = () => {
   const [continent, setContinent] = useState("All");
-  const [isLoading, setIsLoading] = useState(true);
   const [continents, setContinents] = useState<Continent>();
+  const [country, setCountry] = useState<Country>();
 
   useEffect(() => {
     let conts: Continent = {
@@ -39,7 +39,7 @@ const Capital: NextPage = () => {
       Oceania: [],
     };
     for (const country of countries) {
-      if (country.continent) {
+      if (country.continent && country.iso) {
         if (conts.hasOwnProperty(country.continent)) {
           conts[country.continent].push(country);
         }
@@ -47,20 +47,18 @@ const Capital: NextPage = () => {
       }
     }
     setContinents(conts);
-    setIsLoading(false);
+    setCountry(getRandomCountry(conts[continent]));
   }, []);
+
+  useEffect(() => {
+    if (continents) {
+      setCountry(getRandomCountry(continents[continent]));
+    }
+  }, [continents, continent]);
 
   return (
     <Layout title="Capitals">
-      {[
-        "All",
-        "Europe",
-        "Asia",
-        "Africa",
-        "North America",
-        "South America",
-        "Oceania",
-      ].map((name) => (
+      {CONTINENTS.map((name) => (
         <button
           key={name}
           className={`btn ${
@@ -72,14 +70,14 @@ const Capital: NextPage = () => {
         </button>
       ))}
 
-      {continents ? (
+      {continents && country? (
         <div>
           <hr />
-          <Flag code={getRandomCountry(continents[continent]).code} />
+          <Flag code={country.code} />
+          <p>{continents[continent].length}</p>
           <hr />
           <div className="row">
             {continents[continent]
-              .filter((country) => country.iso)
               .map((country, index) => {
                 return <Flag key={index} code={country.code} />;
               })}
