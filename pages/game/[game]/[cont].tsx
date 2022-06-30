@@ -65,7 +65,6 @@ const Game: NextPage = () => {
     if (cont) {
       let found = false;
       for (const _cont of CONTINENTS) {
-        console.log(_cont);
         if (cont === _cont[0]) {
           setContinent(_cont[1]);
           setLoading(false);
