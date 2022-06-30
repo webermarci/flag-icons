@@ -1,16 +1,36 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Nav = () => {
+  const router = useRouter();
+  const { game, cont } = router.query;
+
   return (
-    <nav>
-      {[
-        ["Home", "/"],
-        ["Game", "/game"],
-      ].map(([name, url]) => (
-        <Link key={url} href={url}>
-          <a className="btn btn-info">{name}</a>
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
+      <div className="container-md">
+        <Link href="/">
+          <a className="navbar-brand" href="#">
+            Flag Icons
+          </a>
         </Link>
-      ))}
+        <ul className="navbar-nav">
+          {[
+            ["Capitals", `/game/capitlals/${cont}`],
+            ["Flags", `/game/flags/${cont}`],
+          ].map(([name, url]) => (
+            <li
+              key={url}
+              className={`nav-item ${
+                name.toLowerCase() === game ? "active" : ""
+              }`}
+            >
+              <Link href={url}>
+                <a className="nav-link">{name}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 };

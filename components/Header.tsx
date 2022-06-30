@@ -31,7 +31,7 @@ const Header = () => {
           </a>
         </p>
         <p>
-          <Link href="/game">
+          <Link href="/game/capitals/all">
             <a className="btn btn-lg btn-light">
               <i className="bi bi-controller"></i> Play the game
             </a>
