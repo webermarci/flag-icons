@@ -11,7 +11,7 @@ interface Continent {
 }
 
 const CONTINENTS = [
-  ["all", "All"],
+  ["world", "World"],
   ["europe", "Europe"],
   ["asia", "Asia"],
   ["africa", "Africa"],
@@ -20,22 +20,116 @@ const CONTINENTS = [
   ["oceania", "Oceania"],
 ];
 
+const shuffleArray = (array: T[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};
+
 const getRandomCountry = (countries: Country[]): Country => {
   const max = countries.length;
   return countries[Math.floor(Math.random() * max)];
 };
 
+const getNCountries = (
+  size: number,
+  countries: Country[],
+  ignore: Country
+): Country[] => {
+  let result: Country[] = [];
+  while (true) {
+    let country = getRandomCountry(countries);
+    if (country === ignore || result.includes(country)) {
+      continue;
+    }
+    result.push(country);
+    if (result.length === size) {
+      break;
+    }
+  }
+  console.log(result);
+  return result;
+};
+
+interface GameProps {
+  countries: Country[];
+  continent: string;
+}
+
+const CapitalGame = ({ countries, continent }: GameProps) => {
+  const [country, setCountry] = useState<Country>(getRandomCountry(countries));
+  const [strike, setStrike] = useState(0);
+  const [answers, setAnswers] = useState<Country[]>();
+  const [last, setLast] = useState<Country>();
+
+  const newGame = () => {
+    const next = getRandomCountry(countries);
+    let answers = getNCountries(4, countries, next);
+    answers.push(next);
+    shuffleArray(answers);
+    setCountry(next);
+    setAnswers(answers);
+  };
+
+  useEffect(() => {
+    newGame();
+    setLast(undefined);
+    setStrike(0);
+  }, [countries, continent]);
+
+  return (
+    <div>
+      <h2>Capital of {country.name}?</h2>
+
+      <div className="row justify-content-center">
+        <div className="col-5 answers">
+          {answers &&
+            answers.map((count, index) => {
+              return (
+                <button
+                  key={count.name}
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    if (count.name === country.name) {
+                      setStrike(strike + 1);
+                    } else {
+                      setStrike(0);
+                    }
+                    setLast(country);
+                    newGame();
+                  }}
+                >
+                  {count.capital}
+                </button>
+
+              );
+            })}
+          {last && (strike > 0 ? "correct" : "wrong")}
+          {last && (
+            <div>
+              {last.name} {last.capital}
+            </div>
+          )}
+          <h3>Strike: {strike}</h3>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Game: NextPage = () => {
   const router = useRouter();
   let { game, cont } = router.query;
-  const [continent, setContinent] = useState("All");
+  const [continent, setContinent] = useState(CONTINENTS[0][1]);
   const [continents, setContinents] = useState<Continent>();
   const [country, setCountry] = useState<Country>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let conts: Continent = {
-      All: [],
+      World: [],
       "North America": [],
       "South America": [],
       Africa: [],
@@ -48,7 +142,7 @@ const Game: NextPage = () => {
         if (conts.hasOwnProperty(country.continent)) {
           conts[country.continent].push(country);
         }
-        conts.All.push(country);
+        conts.World.push(country);
       }
     }
     setContinents(conts);
@@ -75,7 +169,7 @@ const Game: NextPage = () => {
       if (!found) {
         setContinent(CONTINENTS[0][1]);
         setLoading(false);
-    }
+      }
     }
   }, [cont]);
 
@@ -100,14 +194,14 @@ const Game: NextPage = () => {
       )}
       {!loading && continents && country ? (
         <div>
-          <Flag code={country.code} />
-          <p>{continents[continent].length}</p>
-          <hr />
-          <div className="row">
-            {continents[continent].map((country, index) => {
-              return <Flag key={index} code={country.code} />;
-            })}
-          </div>
+          {game === "flags" ? (
+            <p></p>
+          ) : (
+            <CapitalGame
+              countries={continents[continent]}
+              continent={continent}
+            />
+          )}
         </div>
       ) : (
         <div>Loading</div>
