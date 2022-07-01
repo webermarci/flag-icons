@@ -97,7 +97,7 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
         <FlagImage code={country.code} />
       </div>
       <div className="row justify-content-center">
-        <div className="col-5 answers">
+        <div className="col-12 col-sm-8 col-md-7 col-lg-5 answers">
           {answers &&
             answers.map((count, index) => {
               return (
