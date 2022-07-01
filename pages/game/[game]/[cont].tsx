@@ -103,7 +103,7 @@ const GamePlay = ({
     newGame(true);
     setLast(undefined);
     setStrike(0);
-  }, [countries, continent]);
+  }, [countries, continent, gameType]);
 
   useEffect(() => {
     if (strike < 7) {
