@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Flag, { Country } from "../../../components/Flag";
+import { Country } from "../../../components/Flag";
 import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
 
@@ -52,12 +52,38 @@ const getNCountries = (
   return result;
 };
 
+interface AnswerProps {
+  gameType: string;
+  country: Country;
+}
+
+const Answer = ({ gameType, country }: AnswerProps) => {
+  return gameType === "flags" ? (
+    <div>
+      <strong>{country.name}</strong>
+      <div style={{ width: "128px", margin: "0 auto" }}>
+        <FlagImage code={country.code} />
+      </div>
+    </div>
+  ) : (
+    <div>
+      <strong>{country.capital}</strong> is capital of{" "}
+      <strong>{country.name}</strong>.
+    </div>
+  );
+};
+
 interface GameProps {
+  gameType: string;
   countries: Country[];
   continent: string;
 }
 
-const CapitalGame = ({ countries, continent }: GameProps) => {
+const GamePlay = ({
+  gameType = "capitals",
+  countries,
+  continent,
+}: GameProps) => {
   const [country, setCountry] = useState<Country>(getRandomCountry(countries));
   const [strike, setStrike] = useState(0);
   const [answers, setAnswers] = useState<Country[]>();
@@ -91,8 +117,13 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
 
   return (
     <div>
-      <h2>Capital of {country.name}?</h2>
-      <div style={{width: "200px", margin: "0 auto"}}>
+      {gameType === "flags" ? (
+        <h2>This flag belongs to?</h2>
+      ) : (
+        <h2>Capital of {country.name}?</h2>
+      )}
+
+      <div style={{ width: "200px", margin: "0 auto" }}>
         <FlagImage code={country.code} />
       </div>
       <div className="row justify-content-center">
@@ -115,7 +146,7 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
                     setLast(country);
                   }}
                 >
-                  {count.capital}
+                  {gameType === "flags" ? count.name : count.capital}
                 </button>
               );
             })}
@@ -124,14 +155,12 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
             (strike > 0 ? (
               <div className="text-center alert alert-success" role="alert">
                 <h4 className="alert-heading">Correct!</h4>
-                <strong>{last.capital}</strong> is capital of{" "}
-                <strong>{last.name}</strong>.
+                <Answer gameType={gameType} country={last} />
               </div>
             ) : (
               <div className="text-center alert alert-danger" role="alert">
                 <h4 className="alert-heading">Wrong!</h4>
-                <strong>{last.capital}</strong> is capital of{" "}
-                <strong>{last.name}</strong>.
+                <Answer gameType={gameType} country={last} />
               </div>
             ))}
         </div>
@@ -215,14 +244,11 @@ const Game: NextPage = () => {
       )}
       {!loading && continents && country ? (
         <div>
-          {game === "flags" ? (
-            <h2 className="text-danger">This game is not ready hey</h2>
-          ) : (
-            <CapitalGame
-              countries={continents[continent]}
-              continent={continent}
-            />
-          )}
+          <GamePlay
+            gameType={game as string}
+            countries={continents[continent]}
+            continent={continent}
+          />
         </div>
       ) : (
         <div>Loading</div>

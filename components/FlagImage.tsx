@@ -33,11 +33,11 @@ const FlagImage = ({ code }: Props) => {
   flag = flag || UNKOWN;
   return (
     <div className="flag">
-    <img
-      className="flag-img"
-      src={`https://flagicons.lipis.dev/${flag.flag_4x3}`}
-      alt={flag.name}
-    />
+      <img
+        className="flag-img"
+        src={`https://flagicons.lipis.dev/${flag.flag_4x3}`}
+        alt={flag.name}
+      />
     </div>
   );
 };
