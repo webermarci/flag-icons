@@ -49,7 +49,6 @@ const getNCountries = (
       break;
     }
   }
-  console.log(result);
   return result;
 };
 
