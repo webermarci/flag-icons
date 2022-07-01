@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Country } from "../../../components/Flag";
 import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
+import { setCookie, getCookie } from "cookies-next";
 
 interface Continent {
   [name: string]: Country[];
@@ -89,6 +90,7 @@ const GamePlay = ({
   const [answers, setAnswers] = useState<Country[]>();
   const [last, setLast] = useState<Country>();
   const [size, setSize] = useState(4);
+  const [record, setRecord] = useState(0);
 
   const newGame = (reset: boolean) => {
     const next = getRandomCountry(countries);
@@ -113,7 +115,31 @@ const GamePlay = ({
     } else {
       setSize(6);
     }
+
+    const keyName = `${gameType}-${continent}`;
+    const stored = getCookie(keyName);
+    if (stored === undefined) {
+      setCookie(keyName, strike);
+      setRecord(strike);
+    } else {
+      if (parseInt(stored as string) < strike) {
+        setCookie(keyName, strike);
+        setRecord(strike);
+      } else {
+        setRecord(parseInt(stored as string));
+      }
+    }
   }, [strike]);
+
+  useEffect(() => {
+    const keyName = `${gameType}-${continent}`;
+    const stored = getCookie(keyName);
+    if (stored === undefined) {
+      setRecord(0);
+    } else {
+      setRecord(parseInt(stored as string));
+    }
+  }, [continent, gameType]);
 
   return (
     <div>
@@ -151,6 +177,7 @@ const GamePlay = ({
               );
             })}
           <h4>Strike: {strike}</h4>
+          <h4>Record: {record}</h4>
           {last &&
             (strike > 0 ? (
               <div className="text-center alert alert-success" role="alert">
