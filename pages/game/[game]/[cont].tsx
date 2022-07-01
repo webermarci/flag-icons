@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Flag, { Country } from "../../../components/Flag";
+import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
 
 interface Continent {
@@ -62,10 +63,11 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
   const [strike, setStrike] = useState(0);
   const [answers, setAnswers] = useState<Country[]>();
   const [last, setLast] = useState<Country>();
+  const [size, setSize] = useState(4);
 
-  const newGame = () => {
+  const newGame = (reset: boolean) => {
     const next = getRandomCountry(countries);
-    let answers = getNCountries(4, countries, next);
+    let answers = getNCountries(reset ? 4 : size, countries, next);
     answers.push(next);
     shuffleArray(answers);
     setCountry(next);
@@ -73,15 +75,27 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
   };
 
   useEffect(() => {
-    newGame();
+    newGame(true);
     setLast(undefined);
     setStrike(0);
   }, [countries, continent]);
 
+  useEffect(() => {
+    if (strike < 7) {
+      setSize(4);
+    } else if (strike < 15) {
+      setSize(5);
+    } else {
+      setSize(6);
+    }
+  }, [strike]);
+
   return (
     <div>
       <h2>Capital of {country.name}?</h2>
-
+      <div style={{width: "200px", margin: "0 auto"}}>
+        <FlagImage code={country.code} />
+      </div>
       <div className="row justify-content-center">
         <div className="col-5 answers">
           {answers &&
@@ -94,25 +108,33 @@ const CapitalGame = ({ countries, continent }: GameProps) => {
                   onClick={() => {
                     if (count.name === country.name) {
                       setStrike(strike + 1);
+                      newGame(false);
                     } else {
                       setStrike(0);
+                      newGame(true);
                     }
                     setLast(country);
-                    newGame();
                   }}
                 >
                   {count.capital}
                 </button>
-
               );
             })}
-          {last && (strike > 0 ? "correct" : "wrong")}
-          {last && (
-            <div>
-              {last.name} {last.capital}
-            </div>
-          )}
-          <h3>Strike: {strike}</h3>
+          <h4>Strike: {strike}</h4>
+          {last &&
+            (strike > 0 ? (
+              <div className="text-center alert alert-success" role="alert">
+                <h4 className="alert-heading">Correct!</h4>
+                <strong>{last.capital}</strong> is capital of{" "}
+                <strong>{last.name}</strong>.
+              </div>
+            ) : (
+              <div className="text-center alert alert-danger" role="alert">
+                <h4 className="alert-heading">Wrong!</h4>
+                <strong>{last.capital}</strong> is capital of{" "}
+                <strong>{last.name}</strong>.
+              </div>
+            ))}
         </div>
       </div>
     </div>
@@ -195,7 +217,7 @@ const Game: NextPage = () => {
       {!loading && continents && country ? (
         <div>
           {game === "flags" ? (
-            <p></p>
+            <h2 className="text-danger">This game is not ready hey</h2>
           ) : (
             <CapitalGame
               countries={continents[continent]}
