@@ -94,7 +94,7 @@ const GamePlay = ({
 
   const newGame = (reset: boolean) => {
     const next = getRandomCountry(countries);
-    let answers = getNCountries(reset ? 4 : size, countries, next);
+    let answers = getNCountries(reset ? 3 : size, countries, next);
     answers.push(next);
     shuffleArray(answers);
     setCountry(next);
@@ -109,11 +109,11 @@ const GamePlay = ({
 
   useEffect(() => {
     if (strike < 7) {
-      setSize(4);
+      setSize(3);
     } else if (strike < 15) {
-      setSize(5);
+      setSize(4);
     } else {
-      setSize(6);
+      setSize(5);
     }
 
     const keyName = `${gameType}-${continent}`;
