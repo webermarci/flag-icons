@@ -254,7 +254,7 @@ const Game: NextPage = () => {
   }, [cont]);
 
   return (
-    <Layout title={game == "flags" ? "Flags" : "Capitals"}>
+    <Layout title={game == "flags" ? `${continent} Flags` : `${continent} Capitals`}>
       <h1>{game === "flags" ? "Find the Flag" : "Find the Capital"}</h1>
       {!loading && (
         <ul className="nav nav-tabs justify-content-center">
