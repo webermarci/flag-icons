@@ -119,11 +119,11 @@ const GamePlay = ({
     const keyName = `${gameType}-${continent}`;
     const stored = getCookie(keyName);
     if (stored === undefined) {
-      setCookie(keyName, strike);
+      setCookie(keyName, strike, { maxAge: 60 * 60 * 24 * 365 });
       setRecord(strike);
     } else {
       if (parseInt(stored as string) < strike) {
-        setCookie(keyName, strike);
+        setCookie(keyName, strike, { maxAge: 60 * 60 * 24 * 365 });
         setRecord(strike);
       } else {
         setRecord(parseInt(stored as string));
@@ -152,8 +152,13 @@ const GamePlay = ({
       <div style={{ width: "200px", margin: "0 auto" }}>
         <FlagImage code={country.code} />
       </div>
+
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-7 col-lg-5 answers">
+          <div className="row score">
+            <div className="col-6 strike text-primary">Strike: {strike}</div>
+            <div className="col-6 record text-success">Record: {record}</div>
+          </div>
           {answers &&
             answers.map((count, index) => {
               return (
@@ -176,8 +181,6 @@ const GamePlay = ({
                 </button>
               );
             })}
-          <h4>Strike: {strike}</h4>
-          <h4>Record: {record}</h4>
           {last &&
             (strike > 0 ? (
               <div className="text-center alert alert-success" role="alert">

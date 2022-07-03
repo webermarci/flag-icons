@@ -65,7 +65,6 @@ h2 {
   }
 }
 
-
 .switch {
   position: fixed;
   bottom: 6px;
@@ -76,14 +75,26 @@ h2 {
 }
 
 footer {
+  margin-top: 32px;
   border-top: 1px solid #e9ecef;
 }
-
 
 .answers {
   .btn {
     display: block;
     width: 100%;
     margin-bottom: 6px;
+  }
+}
+
+.score {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 2px;;
+  .record {
+    text-align: right;
+  }
+
+  .strike {
   }
 }
