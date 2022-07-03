@@ -94,7 +94,7 @@ const GamePlay = ({
 
   const newGame = (reset: boolean) => {
     const next = getRandomCountry(countries);
-    let answers = getNCountries(reset ? 3 : size, countries, next);
+    let answers = getNCountries(reset ? 4 : size, countries, next);
     answers.push(next);
     shuffleArray(answers);
     setCountry(next);
@@ -109,11 +109,11 @@ const GamePlay = ({
 
   useEffect(() => {
     if (strike < 7) {
-      setSize(3);
-    } else if (strike < 15) {
       setSize(4);
-    } else {
+    } else if (strike < 15) {
       setSize(5);
+    } else {
+      setSize(6);
     }
 
     const keyName = `${gameType}-${continent}`;
@@ -160,14 +160,14 @@ const GamePlay = ({
             <div className="col-6 record text-success">Record: {record}</div>
           </div>
           {answers &&
-            answers.map((count, index) => {
+            answers.map((cntry, index) => {
               return (
                 <button
-                  key={count.name}
+                  key={cntry.name}
                   type="button"
                   className="btn btn-primary"
                   onClick={() => {
-                    if (count.name === country.name) {
+                    if (cntry.name === country.name) {
                       setStrike(strike + 1);
                       newGame(false);
                     } else {
@@ -177,19 +177,19 @@ const GamePlay = ({
                     setLast(country);
                   }}
                 >
-                  {gameType === "flags" ? count.name : count.capital}
+                  {gameType === "flags" ? cntry.name : cntry.capital}
                 </button>
               );
             })}
           {last &&
             (strike > 0 ? (
               <div className="text-center alert alert-success" role="alert">
-                <h4 className="alert-heading">Correct!</h4>
+                <h5 className="alert-heading">Correct!</h5>
                 <Answer gameType={gameType} country={last} />
               </div>
             ) : (
               <div className="text-center alert alert-danger" role="alert">
-                <h4 className="alert-heading">Wrong!</h4>
+                <h5 className="alert-heading">Wrong!</h5>
                 <Answer gameType={gameType} country={last} />
               </div>
             ))}
