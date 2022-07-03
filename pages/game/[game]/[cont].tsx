@@ -149,7 +149,7 @@ const GamePlay = ({
         <h2>Capital of {country.name}?</h2>
       )}
 
-      <div style={{ width: "200px", margin: "0 auto" }}>
+      <div style={{ width: "180px", margin: "0 auto" }}>
         <FlagImage code={country.code} />
       </div>
 
