@@ -86,7 +86,7 @@ const GamePlay = ({
   continent,
 }: GameProps) => {
   const [country, setCountry] = useState<Country>(getRandomCountry(countries));
-  const [strike, setStrike] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [answers, setAnswers] = useState<Country[]>();
   const [last, setLast] = useState<Country>();
   const [size, setSize] = useState(4);
@@ -104,13 +104,13 @@ const GamePlay = ({
   useEffect(() => {
     newGame(true);
     setLast(undefined);
-    setStrike(0);
+    setStreak(0);
   }, [countries, continent, gameType]);
 
   useEffect(() => {
-    if (strike < 7) {
+    if (streak < 7) {
       setSize(4);
-    } else if (strike < 15) {
+    } else if (streak < 15) {
       setSize(5);
     } else {
       setSize(6);
@@ -119,17 +119,17 @@ const GamePlay = ({
     const keyName = `${gameType}-${continent}`;
     const stored = getCookie(keyName);
     if (stored === undefined) {
-      setCookie(keyName, strike, { maxAge: 60 * 60 * 24 * 365 });
-      setRecord(strike);
+      setCookie(keyName, streak, { maxAge: 60 * 60 * 24 * 365 });
+      setRecord(streak);
     } else {
-      if (parseInt(stored as string) < strike) {
-        setCookie(keyName, strike, { maxAge: 60 * 60 * 24 * 365 });
-        setRecord(strike);
+      if (parseInt(stored as string) < streak) {
+        setCookie(keyName, streak, { maxAge: 60 * 60 * 24 * 365 });
+        setRecord(streak);
       } else {
         setRecord(parseInt(stored as string));
       }
     }
-  }, [strike]);
+  }, [streak]);
 
   useEffect(() => {
     const keyName = `${gameType}-${continent}`;
@@ -156,7 +156,7 @@ const GamePlay = ({
       <div className="row justify-content-center">
         <div className="col-12 col-sm-8 col-md-7 col-lg-5 answers">
           <div className="row score">
-            <div className="col-6 strike text-primary">Strike: {strike}</div>
+            <div className="col-6 streak text-primary">Streak: {streak}</div>
             <div className="col-6 record text-success">Record: {record}</div>
           </div>
           {answers &&
@@ -168,10 +168,10 @@ const GamePlay = ({
                   className="btn btn-primary"
                   onClick={() => {
                     if (cntry.name === country.name) {
-                      setStrike(strike + 1);
+                      setStreak(streak + 1);
                       newGame(false);
                     } else {
-                      setStrike(0);
+                      setStreak(0);
                       newGame(true);
                     }
                     setLast(country);
@@ -182,7 +182,7 @@ const GamePlay = ({
               );
             })}
           {last &&
-            (strike > 0 ? (
+            (streak > 0 ? (
               <div className="text-center alert alert-success" role="alert">
                 <h5 className="alert-heading">Correct!</h5>
                 <Answer gameType={gameType} country={last} />
