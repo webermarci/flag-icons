@@ -1,13 +1,13 @@
+import {getCookie, setCookie} from "cookies-next";
 import countries from "flag-icons/country.json";
-import type { NextPage } from "next";
+import type {NextPage} from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { Country } from "../../../components/Flag";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import {Country} from "../../../components/Flag";
 import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
-import { setCookie, getCookie } from "cookies-next";
-import { event } from "../../../lib/gtag";
+import {event} from "../../../lib/gtag";
 
 interface Continent {
   [name: string]: Country[];

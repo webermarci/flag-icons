@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ThemeChanger from "./ThemeChanger";
 
 const Header = () => {
   return (
