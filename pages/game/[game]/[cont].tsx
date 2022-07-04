@@ -268,7 +268,7 @@ const Game: NextPage = () => {
 
   return (
     <Layout
-      title={game == "flags" ? `${continent} Flags` : `${continent} Capitals`}
+      title={game == "flags" ? `Flags: ${continent}` : `Capitals: ${continent}`}
     >
       <h1>{game === "flags" ? "Find the Flag" : "Find the Capital"}</h1>
       {!loading && (
