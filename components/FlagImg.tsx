@@ -1,11 +1,11 @@
 import countries from "flag-icons/country.json";
-import {Country} from "../lib/common";
+import { Country } from "../lib/common";
 
 interface Props {
   code: string;
 }
 
-const FlagImage = ({ code }: Props) => {
+const FlagImg = ({ code }: Props) => {
   let flag = null;
   const UNKOWN: Country = {
     code: "xx",
@@ -23,14 +23,12 @@ const FlagImage = ({ code }: Props) => {
 
   flag = flag || UNKOWN;
   return (
-    <div className="flag">
-      <img
-        className="flag-img"
-        src={`https://flagicons.lipis.dev/${flag.flag_4x3}`}
-        alt={flag.name}
-      />
-    </div>
+    <img
+      className="flag-img"
+      src={`https://flagicons.lipis.dev/${flag.flag_4x3}`}
+      alt={flag.name}
+    />
   );
 };
 
-export default FlagImage;
+export default FlagImg;

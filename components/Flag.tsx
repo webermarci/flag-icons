@@ -1,14 +1,5 @@
 import countries from "flag-icons/country.json";
-
-export interface Country {
-  capital?: string;
-  code: string;
-  continent?: string;
-  flag_1x1: string;
-  flag_4x3: string;
-  iso: boolean;
-  name: string;
-}
+import {Country} from "../lib/common";
 
 interface Props {
   code: string;

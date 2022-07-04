@@ -15,6 +15,7 @@ const Nav = () => {
         </Link>
         <ul className="navbar-nav">
           {[
+            ["Answers", `/answers/${cont}`],
             ["Capitals", `/game/capitlals/${cont}`],
             ["Flags", `/game/flags/${cont}`],
           ].map(([name, url]) => (

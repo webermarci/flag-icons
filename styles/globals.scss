@@ -90,11 +90,30 @@ footer {
 .score {
   font-size: 22px;
   font-weight: 500;
-  margin-bottom: 2px;;
+  margin-bottom: 2px;
   .record {
     text-align: right;
   }
+}
 
-  .streak {
+.answers {
+  max-width: 800px;
+  margin: 32px auto;
+  th {
+    text-align: center;
+  }
+
+  td,
+  th {
+    vertical-align: middle;
+  }
+
+  .flag-col {
+    text-align: center;
+
+    img {
+      width: 64px;
+      border: 1px solid #e9ecef;
+    }
   }
 }

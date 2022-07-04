@@ -1,27 +1,13 @@
-import {getCookie, setCookie} from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import countries from "flag-icons/country.json";
-import type {NextPage} from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
-import {Country} from "../../../components/Flag";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
-import {event} from "../../../lib/gtag";
-
-interface Continent {
-  [name: string]: Country[];
-}
-
-const CONTINENTS = [
-  ["world", "World"],
-  ["europe", "Europe"],
-  ["asia", "Asia"],
-  ["africa", "Africa"],
-  ["north-america", "North America"],
-  ["south-america", "South America"],
-  ["oceania", "Oceania"],
-];
+import { Continent, CONTINENTS, Country } from "../../../lib/common";
+import { event } from "../../../lib/gtag";
 
 const shuffleArray = (array: any) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -174,14 +160,14 @@ const GamePlay = ({
                       event({
                         action: gameType,
                         category: continent,
-                        label: 'win',
+                        label: "win",
                         value: 1,
                       });
                     } else {
                       event({
                         action: gameType,
                         category: continent,
-                        label: 'lose',
+                        label: "lose",
                         value: 1,
                       });
                       setStreak(0);
