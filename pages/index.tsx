@@ -3,6 +3,7 @@ import Flag from "../components/Flag";
 import Layout from "../components/Layout";
 import countries from "flag-icons/country.json";
 import { useState } from "react";
+import { event } from "../lib/gtag";
 
 const Home: NextPage = () => {
   const [square, setSquare] = useState(false);
@@ -13,7 +14,14 @@ const Home: NextPage = () => {
           <button
             id="click-4x3"
             className="btn btn-secondary"
-            onClick={() => setSquare(false)}
+            onClick={() => {
+              setSquare(false);
+              event({
+                action: "switch",
+                category: "flags",
+                label: "4x3",
+              });
+            }}
           >
             4x3
           </button>
@@ -21,7 +29,14 @@ const Home: NextPage = () => {
           <button
             id="click-1x1"
             className="btn btn-secondary"
-            onClick={() => setSquare(true)}
+            onClick={() => {
+              setSquare(true);
+              event({
+                action: "switch",
+                category: "flags",
+                label: "1x1",
+              });
+            }}
           >
             1x1
           </button>

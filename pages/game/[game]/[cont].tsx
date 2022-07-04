@@ -7,6 +7,7 @@ import { Country } from "../../../components/Flag";
 import FlagImage from "../../../components/FlagImage";
 import Layout from "../../../components/Layout";
 import { setCookie, getCookie } from "cookies-next";
+import { event } from "../../../lib/gtag";
 
 interface Continent {
   [name: string]: Country[];
@@ -170,7 +171,19 @@ const GamePlay = ({
                     if (cntry.name === country.name) {
                       setStreak(streak + 1);
                       newGame(false);
+                      event({
+                        action: gameType,
+                        category: continent,
+                        label: 'win',
+                        value: 1,
+                      });
                     } else {
+                      event({
+                        action: gameType,
+                        category: continent,
+                        label: 'lose',
+                        value: 1,
+                      });
                       setStreak(0);
                       newGame(true);
                     }
@@ -254,7 +267,9 @@ const Game: NextPage = () => {
   }, [cont]);
 
   return (
-    <Layout title={game == "flags" ? `${continent} Flags` : `${continent} Capitals`}>
+    <Layout
+      title={game == "flags" ? `${continent} Flags` : `${continent} Capitals`}
+    >
       <h1>{game === "flags" ? "Find the Flag" : "Find the Capital"}</h1>
       {!loading && (
         <ul className="nav nav-tabs justify-content-center">
