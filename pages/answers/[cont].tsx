@@ -76,14 +76,14 @@ const Answers: NextPage = () => {
         </ul>
       )}
       {!loading && continents ? (
-        <table className="table answers table-bordered table-hover">
+        <table className="table answers table-bordered table-striped">
           <thead>
             <tr>
               <th className="col-1">#</th>
               <th className="col-1">Flag</th>
-              <th className="col-5">Country</th>
-              <th className="col-5">Capital</th>
-              <th className="col-1">Continent</th>
+              <th className="col-4">Country</th>
+              <th className="col-4">Capital</th>
+              <th className="col-2">Continent</th>
             </tr>
           </thead>
           <tbody>
