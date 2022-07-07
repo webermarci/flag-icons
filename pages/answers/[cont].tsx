@@ -32,6 +32,9 @@ const Answers: NextPage = () => {
         conts.World.push(country);
       }
     }
+    for (const cont in conts) {
+      conts[cont].sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    }
     setContinents(conts);
   }, []);
 
@@ -78,9 +81,9 @@ const Answers: NextPage = () => {
             <tr>
               <th className="col-1">#</th>
               <th className="col-1">Flag</th>
-              <th className="col-4">Country</th>
-              <th className="col-4">Capital</th>
-              <th className="col-2">Continent</th>
+              <th className="col-5">Country</th>
+              <th className="col-5">Capital</th>
+              <th className="col-1">Continent</th>
             </tr>
           </thead>
           <tbody>
