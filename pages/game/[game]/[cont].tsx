@@ -29,7 +29,8 @@ const getNCountries = (
   let result: Country[] = [];
   while (true) {
     let country = getRandomCountry(countries);
-    if (country === ignore || result.includes(country)) {
+    // soume countries have the samae name for capital
+    if (country === ignore || country.capital === ignore.capital || result.includes(country))  {
       continue;
     }
     result.push(country);
