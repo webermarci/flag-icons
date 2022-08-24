@@ -842,10 +842,10 @@ find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-flag-icons@6.6.5:
-  version "6.6.5"
-  resolved "https://registry.yarnpkg.com/flag-icons/-/flag-icons-6.6.5.tgz#8bdff1b58e0d8fe56dc37d2015ad8fa025beccd0"
-  integrity sha512-Z3RYSadWKErPZDNoPr78SwuDlL8FigZIgN8pUyVnip8kuexuX7iBAnOaP0vameLHmlrvLc8hna+8f9ilehgNug==
+flag-icons@6.6.6:
+  version "6.6.6"
+  resolved "https://registry.yarnpkg.com/flag-icons/-/flag-icons-6.6.6.tgz#9ddff81e1126778ca6a5a1e0e2cfac2e865f2cb7"
+  integrity sha512-4lHDKxldnQ7q617pf9Dx9nAetT+9zcMpUexbRrc9kjLw9KJgZ83zA5Dky3Vv7ZDzUjAiZ46x/cy5P0HnEnqA2A==
 
 flat-cache@^3.0.4:
   version "3.0.4"
